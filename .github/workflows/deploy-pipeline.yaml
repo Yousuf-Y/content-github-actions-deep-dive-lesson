@@ -1,5 +1,8 @@
 name: Deploy Lambda Function
-on: [push]
+on: 
+  push:
+    paths:
+    
 
 jobs:
 
@@ -47,6 +50,7 @@ jobs:
 
   documentation:
       runs-on: ubuntu-latest
+      permissions: write-all
       needs: lint
       steps:
         - name: Checkout code
@@ -60,5 +64,6 @@ jobs:
         - name: Deploy Pages site
           uses: JamesIves/github-pages-deploy-action@4.1.4
           with:
+             ACCESS_TOKEN: ${{ secrets.GH_DOCS }}
              branch: gh-pages
              folder: docs
